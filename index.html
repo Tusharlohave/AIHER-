@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#142a4c">
+  <title>Science Career Discovery Test | AIHER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-content">
+      <div class="brand">ADMISSION CELL | AIHER (FORMERLY KNOWN AS AIHER)</div>
+      <h1>Science Career Discovery Test</h1>
+      <p>Discover your strengths. Explore your career options.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- PAGE 1: Google Form submission -->
+    <section class="panel page active" id="formPage">
+      <div class="step-label">Your Future Starts Here</div>
+      <h2>Welcome to the AIHER Science Career Discovery Test</h2>
+      <p class="intro-copy">
+        Helps you explore your interests, identify your strengths, and discover exciting career opportunities in the field of science. Gain valuable insights into your potential and find career pathways that align with your interests and aspirations.
+      </p>
+
+      <div class="notice">
+        <strong>Your future starts with one step! Take the test today and discover where your passion can lead you.</strong> 
+      </div>
+
+      <div class="confirmation">
+        <p class="confirmation-title">Your Passion. Your Potential. Your Career.</p>
+        <p class="small">Click below to continue to the sample test.</p>
+        <button type="button" id="continueBtn" onclick="continueToTest()">
+          Begin My Discovery
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <p class="small footnote">
+        This is an exploratory guidance activity, not a validated psychometric test,
+        admission test or guaranteed career prediction. Discuss your result with a counsellor.
+      </p>
+    </section>
+
+    <!-- PAGE 2: Student details and sample test -->
+    <section class="page hidden" id="testPage">
+      <div class="panel student-panel" id="studentPanel">
+        <div class="step-label"><span class="step-number">01</span> Student Details</div>
+        <h2>Candidate Details</h2>
+        <p class="small">Please complete these details before starting the questions.</p>
+        <div class="grid">
+          <div>
+            <label for="studentName">Student Name <span class="required">*</span></label>
+            <input type="text" id="studentName" placeholder="Enter student name" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="contactNumber">Contact Number <span class="required">*</span></label>
+            <input type="tel" id="contactNumber" placeholder="10-digit contact number"
+                   maxlength="10" minlength="10" pattern="[0-9]{10}" inputmode="numeric" required>
+          </div>
+          <div>
+            <label for="studentEmail">Email Address (Optional)</label>
+            <input type="email" id="studentEmail" placeholder="Enter email address" autocomplete="email">
+          </div>
+          <div class="form-group">
+    <label for="cityName">City Name</label>
+    <input
+        type="text"
+        id="cityName"
+        name="cityName"
+        placeholder="Enter your city name"
+        required
+    >
+</div>
+
+<div class="form-group">
+    <label for="schoolName">College / School Name</label>
+    <input
+        type="text"
+        id="schoolName"
+        name="schoolName"
+        placeholder="Enter your college or school name"
+        required
+    >
+</div>
+          <div>
+            <label for="subjectCombo">Subject Combination <span class="required">*</span></label>
+            <select id="subjectCombo" required>
+              <option value="">Select combination</option>
+              <option value="PCMB">PCMB</option>
+              <option value="PCB">PCB</option>
+              <option value="PCM">PCM</option>
+            </select>
+          </div>
+          <div>
+            <label for="studentClass">Studying Class <span class="required">*</span></label>
+            <select id="studentClass" required>
+              <option value="">Select class</option>
+              <option value="XI">XI</option>
+              <option value="XII">XII</option>
+            </select>
+          </div>
+        </div>
+        <p class="small"><span class="required">*</span> Required fields.</p>
+        <button type="button" id="beginQuizBtn" onclick="beginQuiz()">Save Details &amp; Begin Test</button>
+      </div>
+
+      <section class="panel hidden" id="quizPanel">
+        <div class="quiz-topline">
+          <div>
+            <div class="step-label"><span class="step-number">02</span> Examination</div>
+            <h2>Answer all 20 questions</h2>
+          </div>
+          <div class="question-counter" id="progressText">Question 1 of 20</div>
+        </div>
+        <div class="progress" aria-label="Test progress">
+          <div id="bar"></div>
+        </div>
+        <div class="section-pills" id="sectionPills">
+          <span class="section-pill active">Physics</span>
+          <span class="section-pill">Chemistry</span>
+          <span class="section-pill">Mathematics</span>
+          <span class="section-pill">Biology</span>
+          <span class="section-pill">Career Interest</span>
+        </div>
+        <div id="questionArea" aria-live="polite"></div>
+        <div class="actions no-print">
+          <button type="button" class="secondary" id="prevBtn" onclick="move(-1)">← Previous</button>
+          <button type="button" id="nextBtn" onclick="move(1)">Next →</button>
+          <button type="button" id="submitBtn" class="hidden" onclick="submitTest()">Submit Test &amp; Explore My Career Insights</button>
+        </div>
+        <p class="small test-note">
+          Questions 1–12 assess subject knowledge (Easy, Medium and Hard in each subject).
+          Questions 13–20 explore career interests and have no right or wrong answers.
+        </p>
+      </section>
+    </section>
+
+    <!-- Result -->
+    <section class="panel hidden" id="resultPanel">
+      <div class="no-print"><span class="tag">CAREER GUIDANCE REPORT</span></div>
+      <h2>Science Career Discovery &amp; Guidance Report</h2>
+      <p id="studentSummary" class="small"></p>
+      <p id="studentIdDisplay" class="student-id"></p>
+      <p id="saveStatus" class="small"></p>
+
+      <div class="resultgrid">
+        <div class="resultcard score-card">
+          <div class="small">Subject Knowledge Score</div>
+          <div class="score" id="totalScore">--</div>
+          <div id="percent" class="small"></div>
+        </div>
+        <div class="resultcard">
+          <h3>Career Interest Snapshot</h3>
+          <p id="interestSummary"></p>
+          <p id="careerProfile" class="small"></p>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Section-wise Performance</h3>
+      <div id="subjectScores" class="score-list"></div>
+
+      <h3 class="section-heading">Career Pathways to Explore</h3>
+      <div id="pathways"></div>
+
+      <h3 class="section-heading">Question-wise Response Summary</h3>
+      <div id="answerSummary" class="answer-summary"></div>
+
+      <div class="notice report-notice">
+        <strong>Responsible interpretation:</strong> These suggestions are based on a short sample
+        quiz and self-reported interests. They are not a prediction of success. Discuss course
+        content, eligibility, fees and career opportunities with a qualified counsellor.
+      </div>
+
+      <div class="actions no-print">
+        <button type="button" onclick="downloadPDF()">Download Result as PDF</button>
+        <button type="button" class="secondary" onclick="window.print()">Print Report</button>
+        <button type="button" class="secondary" onclick="location.reload()">Start a New Test</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Admission Cell | AIHER (Formerly DMIHER) · Science Career Discovery Test</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
